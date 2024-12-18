@@ -1,11 +1,11 @@
 @echo off
 
 :: Define the zip file name
-set ZIPFILE=haha.zip
+set ZIPFILE=dataset.zip
 
 :: Compress the dataset folder
 echo Zipping the dataset folder...
-powershell Compress-Archive -Path haha -DestinationPath %ZIPFILE% -Force
+powershell Compress-Archive -Path dataset -DestinationPath %ZIPFILE% -Force
 
 :: Add the zip file to Git
 echo Adding %ZIPFILE% to the repository...
