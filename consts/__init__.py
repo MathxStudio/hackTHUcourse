@@ -1,11 +1,8 @@
 import os
 
 CONSTFILEPATH = os.path.abspath(__file__)
-DATAPATH = os.path.join(
-    os.path.dirname(os.path.dirname(CONSTFILEPATH)),
-    'dataset'
-)
-print(DATAPATH)
+PROJECT_PATH = os.path.dirname(os.path.dirname(CONSTFILEPATH))
+DATAPATH = os.path.join(PROJECT_PATH, 'dataset')
 
 SEGMENTED_presampling = os.path.join(DATAPATH, r'segmented')
 SEGMENTED_aftersampling = os.path.join(DATAPATH, r'segmented_aftersampling')
@@ -20,3 +17,5 @@ BATCH_SIZE = 64
 CLASSES = ['#', '+', '2', '3', '4', '6', '7', '8', '9', 'B', 'C', 'E', 'F',
            'G', 'H', 'J', 'K', 'M', 'P', 'Q', 'R', 'T', 'V', 'W', 'X', 'Y']
 CLASSES_TO_ID = {k: i for i, k in enumerate(CLASSES)}
+num_classes = len(CLASSES)
+

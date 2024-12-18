@@ -19,7 +19,6 @@ loss_function = torch.nn.CrossEntropyLoss()
 transform = transforms.Compose([
     transforms.ToTensor(),
 ])  # Ensure dtype of image is correct
-num_classes = len(CLASSES)
 
 class SingleCharacterDataset(Dataset):
     def __init__(self, data_folder, transform=None):
@@ -172,7 +171,7 @@ def train_model():
         plt.show()
 
 
-train_model()
+# train_model()
 
 
 def example():

@@ -50,4 +50,4 @@ def process_all(path_to_images, output_path):
                 pbar.update(1)
 
 # process_all(SEGMENTED_aftersampling, SEGMENTED_afterpre)
-example()
+# example()
