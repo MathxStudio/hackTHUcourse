@@ -13,3 +13,5 @@ import numpy as np
 
 from consts import *
 
+from single_character import AlexNet, device
+

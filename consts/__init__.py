@@ -8,6 +8,7 @@ SEGMENTED_presampling = os.path.join(DATAPATH, r'segmented')
 SEGMENTED_aftersampling = os.path.join(DATAPATH, r'segmented_aftersampling')
 
 SEGMENTED_afterpre = os.path.join(DATAPATH, r'segmented_afterpre')
+UNSEGMENTED_PATH = os.path.join(DATAPATH, r'whole')
 
 TRAIN_SAMPLES_PATH = os.path.join(SEGMENTED_afterpre, r'train')
 TEST_SAMPLES_PATH = os.path.join(SEGMENTED_afterpre, r'test')
