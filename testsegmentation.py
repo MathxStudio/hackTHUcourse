@@ -1,3 +1,24 @@
+def merge_abab_patterns(char_array):
+    result = []
+    i = 0
+    n = len(char_array)
+
+    while i < n:
+        if i + 3 < n and char_array[i] != char_array[i + 1]:
+            if char_array[i] == char_array[i + 2] and char_array[i + 1] == char_array[i + 3]:
+                result.extend([char_array[i], char_array[i + 1]])
+                i += 4
+                continue
+
+        result.append(char_array[i])
+        i += 1
+
+    return result
+
+
+
+
+
 def find_longest_sequence(characters):
     from collections import defaultdict
 
@@ -48,7 +69,20 @@ def find_longest_sequence(characters):
             results.append(char)
         else:
             results.append(char)
+    results = merge_abab_patterns(results)
 
+    if(len(results) <= 3):
+        results = []
+        for char, length in combined_char_segments:
+            if length >= 9:
+                results.append(char)
+                results.append(char)
+                results.append(char)
+            elif length >= 7:
+                results.append(char)
+                results.append(char)
+            else:
+                results.append(char)
 
     return results
 
@@ -63,3 +97,5 @@ def example():
     print(output_1)  # Expected: ['2', 'V', '8', 'Y', 'V']
     print(output_2)  # Expected: ['G', 'G', 'X', 'B', 'M']
 
+
+# example()

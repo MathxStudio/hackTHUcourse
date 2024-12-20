@@ -4,13 +4,13 @@ import cv2
 import torch
 from consts import *
 from imagedata_preprocessing import imagedata_preprocessing
-from single_character import transform, device, AlexNet
+from single_character_simpleCNN import transform, device, simpleCNN
 from torchvision import transforms
 from tqdm import tqdm
 from testsegmentation import find_longest_sequence
 
-model = AlexNet(num_classes=num_classes).to(device)
-model.load_state_dict(torch.load(os.path.join(PROJECT_PATH, r'best_model.pth')))
+model = simpleCNN(num_classes=num_classes).to(device)
+model.load_state_dict(torch.load(os.path.join(PROJECT_PATH, r'best_model_simpleCNN.pth')))
 test_transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Lambda(lambda x: x.repeat(3, 1, 1) if x.size(0) == 1 else x),
