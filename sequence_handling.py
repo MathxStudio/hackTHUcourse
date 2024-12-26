@@ -15,10 +15,6 @@ def merge_abab_patterns(char_array):
 
     return result
 
-
-
-
-
 def find_longest_sequence(characters):
     from collections import defaultdict
 

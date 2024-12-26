@@ -155,8 +155,8 @@ def train_model():
 
         if avg_test_accuracy > best_acc:
             best_acc = avg_test_accuracy
-            torch.save(net.state_dict(), 'best_model_simpleCNN.pth')
-            print("Saved to best model")
+            torch.save(net.state_dict(), r'saved_models\best_model_simpleCNN.pth')
+            print(r"Saved to .\models\best_model.pth")
 
 
         plt.figure(figsize=(8, 6))

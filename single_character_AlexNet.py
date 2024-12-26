@@ -12,9 +12,10 @@ from PIL import Image
 import numpy as np
 
 from consts import *
+from models import AlexNet
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-EPOCHS = 20
+EPOCHS = 10
 loss_function = torch.nn.CrossEntropyLoss()
 transform = transforms.Compose([
     transforms.ToTensor(),
@@ -61,38 +62,6 @@ single_character_test_dataset = SingleCharacterDataset(TEST_SAMPLES_PATH, transf
 single_character_train_dataloader = DataLoader(dataset=single_character_train_dataset, batch_size=BATCH_SIZE, shuffle=True)
 single_character_test_dataloader = DataLoader(dataset=single_character_test_dataset, batch_size=BATCH_SIZE, shuffle=False)
 
-
-class AlexNet(nn.Module):
-    def __init__(self, num_classes):
-        super(AlexNet, self).__init__()
-
-        self.features = nn.Sequential(  # 3 x 40 x 40
-            nn.Conv2d(3, 32, kernel_size=(5,5)), # 32 x 36 x 36
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2), # 32 x 18 x 18
-            nn.Conv2d(32, 64, kernel_size=(3,3)), # 64 x 16 x 16
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2),    # 64 x 8 x 8
-            nn.Conv2d(64, 128, kernel_size=(3,3)), # 128 x 6 x 6
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2),    # 128 x 3 x 3
-        )
-
-        self.classifier = nn.Sequential(
-            nn.Dropout(),
-            nn.Linear(128 * 3 * 3, 512),
-            nn.ReLU(inplace=True),
-            nn.Dropout(),
-            nn.Linear(512, 512),
-            nn.ReLU(inplace=True),
-            nn.Linear(512, num_classes),
-        )
-
-    def forward(self, x):
-        x = self.features(x)
-        x = torch.flatten(x, 1)
-        x = self.classifier(x)
-        return x
 
 net = AlexNet(num_classes).to(device)
 optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
@@ -156,7 +125,8 @@ def train_model():
 
         if avg_test_accuracy > best_acc:
             best_acc = avg_test_accuracy
-            torch.save(net.state_dict(), 'best_model.pth')
+            torch.save(net.state_dict(), r'saved_models\best_model.pth')
+            print(r"Saved to .\models\best_model.pth")
 
 
         plt.figure(figsize=(8, 6))
@@ -170,8 +140,8 @@ def train_model():
         plt.title(f'Epoch {epoch + 1} Loss/Accuracy Trend')
         plt.show()
 
-
-# train_model()
+# print(torch.cuda.is_available())
+train_model()
 
 
 def example():
@@ -183,8 +153,7 @@ def example():
     print(image.shape)
     newimg = Image.open(sample_image_path).convert('L')
     print(np.array(newimg).shape)
-    # cv2.imshow('sample image', image)
-    # newimg.show()
+
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

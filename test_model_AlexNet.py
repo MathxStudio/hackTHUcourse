@@ -4,13 +4,13 @@ import cv2
 import torch
 from consts import *
 from imagedata_preprocessing import imagedata_preprocessing
-from single_character import transform, device, AlexNet
+from single_character_AlexNet import transform, device, AlexNet
 from torchvision import transforms
 from tqdm import tqdm
-from testsegmentation import find_longest_sequence
+from sequence_handling import find_longest_sequence
 
 model = AlexNet(num_classes=num_classes).to(device)
-model.load_state_dict(torch.load(os.path.join(PROJECT_PATH, r'best_model.pth')))
+model.load_state_dict(torch.load(os.path.join(PROJECT_PATH, r'saved_models', r'best_model.pth')))
 test_transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Lambda(lambda x: x.repeat(3, 1, 1) if x.size(0) == 1 else x),
@@ -25,6 +25,7 @@ def test_model():
     image = test_transform(image)
     image = image[None, :, :, :]
 
+    image = test_transform(image).unsqueeze(0).to(device)
 
 
     model.eval()
@@ -39,6 +40,9 @@ def test_full_image(image_path):
 
     image = test_transform(image)
     image = image[None, :, :, :]
+
+    image = test_transform(image).unsqueeze(0).to(device)
+
 
     segmented = [image[:, :, :, 5*i:5*(i+8)] for i in range(29)]
     predicted_characters = []
